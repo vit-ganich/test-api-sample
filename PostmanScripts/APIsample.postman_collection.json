@@ -6,110 +6,287 @@
 	},
 	"item": [
 		{
-			"name": "Create item #1",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\":\"walk dog\",\n\t\"isComplete\": true\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "weather-forecast",
+			"item": [
+				{
+					"name": "Weather",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "09b7d13e-4a0b-477d-a728-ecb5dc67d4e2",
+								"exec": [
+									"pm.test(\"Verify status code is 200\", function () { ",
+									"    pm.response.to.have.status(200); ",
+									"});",
+									"",
+									"pm.test(\"Verify response body - smoke\", function () { ",
+									"    let actual = pm.response.text();",
+									"    pm.expect(actual).to.include(\"date\", \"temperatureC\", \"temperatureF\", \"summary\");",
+									"});",
+									"",
+									"pm.test(\"Verify response body length\", function () { ",
+									"    let jsonData = pm.response.json();",
+									"    pm.expect(jsonData.length).to.eql(5);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:44369/api/TodoItems",
-					"protocol": "https",
-					"host": [
-						"localhost"
 					],
-					"port": "44369",
-					"path": [
-						"api",
-						"TodoItems"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Check item #1 was created",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:44369/api/TodoItems/1",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44369",
-					"path": [
-						"api",
-						"TodoItems",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update item #1 with new task",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "  {\r\n    \"ID\":1,\r\n    \"name\":\"feed hamster\",\r\n    \"isComplete\":true\r\n  }",
-					"options": {
-						"raw": {
-							"language": "json"
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44369/weatherforecast",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"weatherforecast"
+							]
 						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7c76face-379f-4eeb-ada6-2313000f91e6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
 					}
 				},
-				"url": {
-					"raw": "https://localhost:44369/api/TodoItems/1",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "44369",
-					"path": [
-						"api",
-						"TodoItems",
-						"1"
-					]
-				},
-				"description": "Set name to \"feed hamster\""
-			},
-			"response": []
+				{
+					"listen": "test",
+					"script": {
+						"id": "abb3a4d4-389d-42dd-8a9b-4f1285500022",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Delete item #1",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
+			"name": "todo-items",
+			"item": [
+				{
+					"name": "Create item #1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5004402b-a25f-45d8-89a7-beac66e530ac",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () { ",
+									"    pm.response.to.have.status(201); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"walk dog\",\n\t\"description\":\"Go for a walk with the dog\",\n\t\"isComplete\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44369/api/TodoItems",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"api",
+								"TodoItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check item #1 was created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e1fb24bf-80a1-43be-9e93-d8f22c3237d7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { ",
+									"    pm.response.to.have.status(200); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44369/api/TodoItems/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"api",
+								"TodoItems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update item #1 with new task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eae1fcfb-454c-4831-8423-d5e776ac8bcf",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () { ",
+									"    pm.response.to.have.status(204); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"ID\":1,\r\n    \"name\":\"feed hamster\",\r\n    \"isComplete\":true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44369/api/TodoItems/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"api",
+								"TodoItems",
+								"1"
+							]
+						},
+						"description": "Set name to \"feed hamster\""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete item #1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "059ed645-298e-4fc5-bc8e-df233c606fb1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { ",
+									"    pm.response.to.have.status(200); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44369/api/TodoItems/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"api",
+								"TodoItems",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all created items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b03a79dc-0d60-49a7-9bdd-0988d56591ec",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44369/api/TodoItems/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44369",
+							"path": [
+								"api",
+								"TodoItems",
+								""
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
